@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# .php एक्सटेंशन हटाने के लिए नियम (सिर्फ GET रिक्वेस्ट के लिए)
+RewriteCond %{REQUEST_METHOD} !POST [NC]
+RewriteCond %{REQUEST_URI} !/api/ [NC]
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# बिना .php वाले URL को आंतरिक रूप से .php फाइल पर भेजना
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
